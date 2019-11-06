@@ -13,6 +13,7 @@ class StatusesController extends Controller
         $this->middleware('auth');
     }
 
+    //发布
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -26,7 +27,14 @@ class StatusesController extends Controller
         return redirect()->back();
     }
 
-
+    //删除
+    public function destroy(Status $status)
+    {
+        $this->authorize('destroy', $status);
+        $status->delete();
+        session()->flash('success', '微博已被成功删除！');
+        return redirect()->back();
+    }
 
 
 }
